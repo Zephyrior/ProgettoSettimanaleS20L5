@@ -6,6 +6,7 @@ import it.epicode.ProgettoSettimanaleS20L5.auth.AppUserRepository;
 import it.epicode.ProgettoSettimanaleS20L5.common.CommonResponse;
 import it.epicode.ProgettoSettimanaleS20L5.eventi.Evento;
 import it.epicode.ProgettoSettimanaleS20L5.eventi.EventoRepository;
+import it.epicode.ProgettoSettimanaleS20L5.eventi.EventoResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -122,4 +124,48 @@ public class PrenotazioneService {
 
             prenotazioneRepository.delete(prenotazione);
         }
+
+//        public void updatePrenotazione(Long id, PrenotazioneRequest request) {
+//            Prenotazione prenotazione = prenotazioneRepository.findById(id)
+//                    .orElseThrow(() -> new EntityNotFoundException("Prenotazione non trovata"));
+//
+//            int postiPrenotati = prenotazione.getPostiPrenotati();
+//
+//            AppUser user = getUserByUsername();
+//            if (!prenotazione.getUser().equals(user)) {
+//                throw new IllegalArgumentException("Non sei autorizzato a modificare questa prenotazione");
+//            }
+//
+//            Evento evento = eventoRepository.findById(request.getEvento_Id())
+//                    .orElseThrow(() -> new EntityNotFoundException("Evento con id " + request.getEvento_Id() + " non trovato"));
+//
+//            if (!canReserve(request.getEvento_Id(), request.getPostiPrenotati(), request.getDataPrenotazione())) {
+//                throw new IllegalArgumentException("Non è possibile effettuare la prenotazione");
+//            }
+//
+//            prenotazione.setDataPrenotazione(request.getDataPrenotazione());
+//            prenotazione.setPostiPrenotati(request.getPostiPrenotati());
+//            prenotazione.setEvento(evento);
+//            prenotazioneRepository.save(prenotazione);
+//
+//            evento.setPostiDisponibili(evento.getPostiDisponibili() - request.getPostiPrenotati() + postiPrenotati);
+//            eventoRepository.save(evento);
+//            System.out.println("Updating prenotazione with ID: " + id);
+//            System.out.println("Fetched prenotazione ID: " + prenotazione.getId());
+//        }
+
+        public List<EventoResponse> getEventiByUser(){
+
+            AppUser user = getUserByUsername();
+
+            return prenotazioneRepository.findByUsername(user.getUsername()).stream()
+                    .map(prenotazione -> {
+                        EventoResponse response = new EventoResponse();
+                        BeanUtils.copyProperties(prenotazione.getEvento(), response);
+                        return response;
+                    })
+                    .toList();
+
+        }
+
     }

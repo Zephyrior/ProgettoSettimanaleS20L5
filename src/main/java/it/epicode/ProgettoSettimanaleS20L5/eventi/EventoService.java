@@ -52,4 +52,14 @@ public class EventoService {
         eventoRepository.delete(evento);
     }
 
+    public void updateEvento(Long id, EventoRequest request) {
+        Evento evento = eventoRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Evento con id " + id + " non trovato"));
+
+        BeanUtils.copyProperties(request, evento);
+
+        eventoRepository.save(evento);
+    }
+
 }
