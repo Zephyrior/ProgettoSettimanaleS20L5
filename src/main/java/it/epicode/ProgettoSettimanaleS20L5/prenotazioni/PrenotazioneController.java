@@ -1,6 +1,7 @@
 package it.epicode.ProgettoSettimanaleS20L5.prenotazioni;
 
 import it.epicode.ProgettoSettimanaleS20L5.common.CommonResponse;
+import it.epicode.ProgettoSettimanaleS20L5.eventi.EventoResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,12 @@ public class PrenotazioneController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("eventi/user")
+    public List<EventoResponse> getEventiByUser() {
+        return prenotazioneService.getEventiByUser();
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CommonResponse createPrenotazione(@RequestBody @Valid PrenotazioneRequest request) {
@@ -41,4 +48,10 @@ public class PrenotazioneController {
     public void deletePrenotazione(@PathVariable Long id) {
         prenotazioneService.deletePrenotazione(id);
     }
+
+//    @PreAuthorize("isAuthenticated()")
+//    @PutMapping("/{id}")
+//    public void updatePrenotazione(@PathVariable Long id, @RequestBody @Valid PrenotazioneRequest request) {
+//        prenotazioneService.updatePrenotazione(id, request);
+//    }
 }
