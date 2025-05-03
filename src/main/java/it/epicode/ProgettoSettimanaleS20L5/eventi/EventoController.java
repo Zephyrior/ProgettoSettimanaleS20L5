@@ -42,4 +42,10 @@ public class EventoController {
         eventoService.deleteEvento(id);
     }
 
+    @PreAuthorize("hasRole('ORGANIZER')")
+    @PutMapping("/{id}")
+    public void updateEvento(@PathVariable Long id, @RequestBody @Valid EventoRequest request) {
+        eventoService.updateEvento(id, request);
+    }
+
 }

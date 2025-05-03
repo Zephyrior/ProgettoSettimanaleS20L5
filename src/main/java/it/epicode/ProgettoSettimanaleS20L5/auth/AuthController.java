@@ -34,7 +34,7 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
-    @PreAuthorize("hasRole('ROLE_ORGANIZER')")
+//    @PreAuthorize("hasRole('ROLE_ORGANIZER')")
     @GetMapping("/users")
     public List<AppUserResponse> getAllUsers() {
         return appUserService.getAllUsers();

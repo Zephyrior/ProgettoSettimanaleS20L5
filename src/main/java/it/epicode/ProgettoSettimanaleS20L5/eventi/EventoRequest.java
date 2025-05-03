@@ -27,7 +27,6 @@ public class EventoRequest {
     @NotNull(message = "La data dell'evento è obbligatoria")
     private LocalDate data;
 
-    @NotNull(message = "Il numero di posti disponibili è obbligatorio")
     @Min(value = 1, message = "Il numero di posti disponibili deve essere almeno 1")
     private int postiDisponibili;
 }

@@ -23,7 +23,7 @@ public class Prenotazione {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate dataPrenotazione = LocalDate.now();
+    private LocalDate dataPrenotazione;
 
     @Column(nullable = false)
     private int postiPrenotati;
